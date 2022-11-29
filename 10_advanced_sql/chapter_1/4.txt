@@ -1,0 +1,7 @@
+Сколько уникальных постов пользователя с именем Joel Coehoorn получили хотя бы один голос?
+
+SELECT COUNT(DISTINCT p.id)
+FROM stackoverflow.posts AS p 
+JOIN stackoverflow.users u ON p.user_id = u.id
+JOIN stackoverflow.votes AS v ON p.id = v.post_id 
+WHERE u.display_name = 'Joel Coehoorn';

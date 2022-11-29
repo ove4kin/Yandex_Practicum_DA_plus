@@ -1,0 +1,14 @@
+Дополним предыдущий запрос и выведем среднее число учебных заведений (всех, не только уникальных), которые окончили 
+сотрудники разных компаний. Нужно вывести только одну запись, поэтому группировка здесь не понадобится.
+
+SELECT AVG(t.total_instituition)
+FROM (SELECT p.id, 
+      COUNT(e.instituition) AS total_instituition
+      FROM people AS p JOIN education AS e ON p.id = e.person_id
+      WHERE company_id in (SELECT id
+                           FROM company 
+                           WHERE id in (SELECT company_id
+                                        FROM funding_round
+                                        WHERE is_first_round = 1 AND is_last_round =1)
+                                        AND status = 'closed')
+      GROUP BY p.id) AS t;

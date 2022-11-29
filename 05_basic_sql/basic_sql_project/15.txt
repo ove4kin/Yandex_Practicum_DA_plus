@@ -1,0 +1,12 @@
+Составим таблицу, куда войдут уникальные пары с номерами сотрудников из предыдущей задачи и учебным заведением, 
+которое окончил сотрудник.
+
+SELECT p.id, 
+       e.instituition
+FROM people AS p JOIN education AS e ON p.id = e.person_id
+WHERE company_id in (SELECT id
+                     FROM company 
+                     WHERE id in (SELECT company_id
+                                  FROM funding_round
+                                  WHERE is_first_round = 1 AND is_last_round = 1)
+                     AND status = 'closed');

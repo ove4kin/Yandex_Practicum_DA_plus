@@ -1,0 +1,8 @@
+
+Отобразим имя и фамилию всех сотрудников стартапов. Добавим поле с названием учебного заведения, которое окончил 
+сотрудник, если эта информация известна.
+
+SELECT first_name,
+       last_name,
+	   instituition
+FROM people AS p LEFT JOIN education AS e ON p.id = e.person_id;

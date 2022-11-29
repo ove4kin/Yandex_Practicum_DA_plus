@@ -1,0 +1,13 @@
+Отобразим заголовки постов, которые были написаны пользователями, получившими более 1000 значков. Посты без 
+заголовков не должны попасть в список.
+
+SELECT title
+FROM stackoverflow.posts AS p
+LEFT JOIN stackoverflow.users AS u2 ON p.user_id = u2.id
+WHERE p.user_id IN
+    (SELECT u.id
+     FROM stackoverflow.users AS u
+     JOIN stackoverflow.badges AS b ON u.id = b.user_id
+     GROUP BY u.id
+     HAVING COUNT(DISTINCT b.id)>1000)
+  AND title IS NOT NULL;

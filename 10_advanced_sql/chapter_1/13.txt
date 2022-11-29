@@ -1,0 +1,15 @@
+Для каждого пользователя, который написал хотя бы один пост, найдём интервал между регистрацией и временем создания 
+первого поста. Отобразим:
+идентификатор пользователя;
+разницу во времени между регистрацией и первым постом.
+
+WITH raw AS (SELECT user_id,
+                    p.creation_date AS frst,
+                    ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY p.creation_date) AS number_temp,
+                    u.creation_date AS reg 
+             FROM stackoverflow.posts AS p JOIN stackoverflow.users AS u ON p.user_id = u.id 
+             ORDER BY user_id)
+SELECT user_id,
+       frst - reg
+FROM raw
+WHERE number_temp = 1;

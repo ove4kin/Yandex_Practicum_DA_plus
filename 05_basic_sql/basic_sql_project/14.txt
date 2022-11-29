@@ -1,0 +1,10 @@
+Составим список уникальных номеров сотрудников, которые работают в компаниях, отобранных в предыдущем задании.
+
+SELECT p.id
+FROM people AS p 
+WHERE company_id in (SELECT id
+                     FROM company 
+                     WHERE id in (SELECT company_id
+                                  FROM funding_round
+                                  WHERE is_first_round = 1 AND is_last_round = 1)
+                     AND status = 'closed');

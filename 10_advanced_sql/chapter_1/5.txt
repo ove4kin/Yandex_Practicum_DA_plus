@@ -1,0 +1,8 @@
+
+Выгрузим все поля таблицы vote_types. Добавим к таблице поле rank, в которое войдут номера записей в обратном порядке. 
+Таблица должна быть отсортирована по полю id.
+
+SELECT *,
+       ROW_NUMBER() OVER (ORDER BY id DESC) AS rank
+FROM stackoverflow.vote_types 
+ORDER BY id;

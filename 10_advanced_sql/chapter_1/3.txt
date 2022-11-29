@@ -1,0 +1,7 @@
+
+Сколько пользователей получили значки сразу в день регистрации? Выведем количество уникальных пользователей.
+
+SELECT COUNT(DISTINCT u.id)
+FROM stackoverflow.users AS u
+LEFT JOIN stackoverflow.badges AS b ON u.id = b.user_id
+WHERE CAST(u.creation_date AS date) = CAST(b.creation_date AS date);

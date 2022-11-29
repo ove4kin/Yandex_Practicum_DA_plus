@@ -1,0 +1,13 @@
+Отберём 10 пользователей, которые поставили больше всего голосов типа Close. Отобразите таблицу из двух полей: 
+идентификатором пользователя и количеством голосов. Отсортируем данные сначала по убыванию количества голосов, 
+потом по убыванию значения идентификатора пользователя.
+
+SELECT u.id,
+       COUNT(v.id)
+FROM stackoverflow.votes AS v
+LEFT JOIN stackoverflow.users AS u ON v.user_id = u.id 
+LEFT JOIN stackoverflow.vote_types AS vt ON v.vote_type_id = vt.id 
+WHERE vt.name = 'Close'
+GROUP BY u.id
+ORDER BY COUNT(v.id) DESC, u.id DESC
+LIMIT 10;

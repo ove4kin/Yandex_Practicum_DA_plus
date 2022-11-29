@@ -1,0 +1,12 @@
+Напишем похожий запрос: выведите среднее число учебных заведений (всех, не только уникальных), которые окончили 
+сотрудники Facebook*.
+*(сервис, запрещённый на территории РФ)
+
+SELECT AVG(t.total_instituition)
+FROM (SELECT p.id, 
+      COUNT(e.instituition) AS total_instituition
+      FROM people AS p JOIN education AS e ON p.id = e.person_id
+      WHERE company_id in (SELECT id
+                           FROM company 
+                           WHERE name in ('Facebook'))
+      GROUP BY p.id) AS t;

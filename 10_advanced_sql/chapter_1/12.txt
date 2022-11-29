@@ -1,0 +1,14 @@
+Посчитаем ежедневный прирост новых пользователей в ноябре 2008 года. Сформируем таблицу с полями:
+номер дня;
+число пользователей, зарегистрированных в этот день;
+сумму пользователей с накоплением.
+
+WITH users_1 AS (SELECT EXTRACT(DAY FROM creation_date) AS day_reg,
+                        COUNT(id) AS count_id
+                 FROM stackoverflow.users u 
+                 WHERE EXTRACT(MONTH FROM creation_date) = 11
+                           AND EXTRACT(YEAR FROM creation_date) = 2008
+                 GROUP BY day_reg)
+SELECT *,
+       SUM(count_id) OVER (ORDER BY day_reg)
+FROM users_1;

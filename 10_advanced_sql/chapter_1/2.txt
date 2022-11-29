@@ -1,0 +1,11 @@
+
+Сколько в среднем в день задавали вопросов с 1 по 18 ноября 2008 включительно? Результат округлим до целого числа.
+
+SELECT ROUND(AVG(count_id))
+FROM (SELECT EXTRACT(DAY FROM creation_date) AS day,
+             COUNT(id) AS count_id
+      FROM stackoverflow.posts 
+      WHERE post_type_id = 1 
+          AND DATE_TRUNC('day', creation_date) BETWEEN '2008-11-01' 
+             AND '2008-11-18'
+      GROUP BY day) AS posts_grouped;
